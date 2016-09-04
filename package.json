@@ -3,6 +3,14 @@
     "displayName": "Quick Open File",
     "description": "This is a extension for quickly open file, that's name start with current word.",
     "version": "0.0.1",
+    "icon": "img/quick-open-file.png",
+    "bugs": {
+        "url": "https://github.com/AlanWalk/quick-open-file/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AlanWalk/quick-open-file.git"
+    },
     "publisher": "AlanWalk",
     "engines": {
         "vscode": "^1.0.0"
@@ -23,7 +31,33 @@
                 "command":"extension.quickOpenFile",
                 "key":"alt+g"
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Quick Open File Configuration",
+            "properties": {
+                "quickOpenFile.extensionInclude": {
+                    "type": "array",
+                    "default": ["cpp", "c", "h"],
+                    "description": "Set which file extension you want to include."
+                },
+                "quickOpenFile.folderExclude": {
+                    "type": "array",
+                    "default": ["node_modules", ".vscode"],
+                    "description": "Set which folder you want to exclude."
+                },
+                "quickOpenFile.autoCompleteSuffix": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether auto add suffix to word's end."
+                },
+                "quickOpenFile.completeSuffixList": {
+                    "type": "array",
+                    "default": [ "_C", "_S" ],
+                    "description": "If you want to complete any suffix, type *."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",

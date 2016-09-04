@@ -6,25 +6,36 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable = vscode.commands.registerCommand('extension.quickOpenFile', () => {
 
-        let range = vscode.window.activeTextEditor.document.getWordRangeAtPosition(vscode.window.activeTextEditor.selection.start);
-        let text = vscode.window.activeTextEditor.document.getText(range);
-        let inclue = '**/' + text + '*'
-        // '**/Text*.txt'
-        vscode.workspace.findFiles(inclue, '', 100)
-            .then(uries=>{
-                let length = uries.length
+        let workspace = vscode.workspace;
+        let window = vscode.window;
+        let editor = window.activeTextEditor;
+        let document = editor.document;
+
+        let configuration       = workspace.getConfiguration('quickOpenFile');
+        let extensionInclude    = configuration.get('extensionInclude');
+        let folderExclude       = configuration.get('folderExclude');
+        let completeSuffixList  = configuration.get('completeSuffixList');
+        let autoCompleteSuffix  = configuration.get('autoCompleteSuffix');
+
+        let range = document.getWordRangeAtPosition(editor.selection.start);
+        let text = document.getText(range);
+        let inclue = '**/' + text + '*';
+
+        workspace.findFiles(inclue, '', 100)
+            .then(files=>{
+                let length = files.length;
                 if (length <= 0) {
-                    vscode.window.showWarningMessage("No any file about it.");
+                    window.showWarningMessage("No any file about it.");
                 } else if (length == 1) {
-                    vscode.workspace.openTextDocument(uries[0].fsPath).then(txtDocument=>vscode.window.showTextDocument(txtDocument));
+                    workspace.openTextDocument(files[0].fsPath).then(txtDocument=>window.showTextDocument(txtDocument));
                 } else {
                     let pathArray = []
-                    uries.forEach(url => {
-                        pathArray.push(url.fsPath)
+                    files.forEach(file => {
+                        pathArray.push(file.fsPath)
                     });
-                    vscode.window.showQuickPick(pathArray).then((path) => {
+                    window.showQuickPick(pathArray).then((path) => {
                         if (path) {
-                            vscode.workspace.openTextDocument(path).then(txtDocument=>vscode.window.showTextDocument(txtDocument));
+                            workspace.openTextDocument(path).then(txtDocument=>window.showTextDocument(txtDocument));
                         }
                     });
                 }
