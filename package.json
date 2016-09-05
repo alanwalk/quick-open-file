@@ -38,23 +38,23 @@
             "properties": {
                 "quickOpenFile.extensionInclude": {
                     "type": "array",
-                    "default": ["cpp", "c", "h"],
-                    "description": "Set which file extension you want to include."
+                    "default": [ ".lua", ".js" ],
+                    "description": "Set which file extension you want to include, * is any extension."
                 },
                 "quickOpenFile.folderExclude": {
                     "type": "array",
-                    "default": ["node_modules", ".vscode"],
+                    "default": [ "node_modules", ".vscode" ],
                     "description": "Set which folder you want to exclude."
                 },
                 "quickOpenFile.autoCompleteSuffix": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Whether auto add suffix to word's end."
+                    "description": "Whether auto add suffix to word."
                 },
-                "quickOpenFile.completeSuffixList": {
+                "quickOpenFile.suffixList": {
                     "type": "array",
-                    "default": [ "_C", "_S" ],
-                    "description": "If you want to complete any suffix, type *."
+                    "default": [ "*" ],
+                    "description": "If autoCompleteSuffix is true, will auto add suffix, * is any suffix."
                 }
             }
         }
