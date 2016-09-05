@@ -113,7 +113,6 @@ class QuickOpenFileTools {
         if (relativeFolderName.startsWith('/')) {
             relativeFolderName = relativeFolderName.substring(1, relativeFolderName.length);
         }
-        console.log(relativeFolderName);
         let index = this.folderExclude.indexOf(relativeFolderName);
         return index == -1;
     }

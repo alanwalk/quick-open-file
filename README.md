@@ -36,7 +36,7 @@ This is default setting, you can override in your keyboard shortcuts.
 ## Default Settings
 |attributes|values|defaults|description|
 |---|---|---|---|
-|quickOpenFile.extensionInclude|string[]|[ ".lua", ".js" ]|Set which file extension you want to include, * is any extension.|
+|quickOpenFile.extensionInclude|string[]|[ "lua", "js" ]|Set which file extension you want to include, * is any extension.|
 |quickOpenFile.folderExclude|string[]|[ "node_modules", ".vscode" ]|Set which folder you want to exclude.|
 |quickOpenFile.suffixList|bool|[ "*" ]|If autoCompleteSuffix is true, will auto add suffix, * is any suffix.|
 |quickOpenFile.autoCompleteSuffix|string[]|false|Whether auto add suffix to word.|
