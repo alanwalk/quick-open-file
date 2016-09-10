@@ -1,4 +1,4 @@
-'use script'
+'use strict'
 
 import * as vscode from 'vscode';
 import * as utils from './utils';
