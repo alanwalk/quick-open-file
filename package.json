@@ -2,7 +2,7 @@
     "name": "quick-open-file",
     "displayName": "Quick Open File",
     "description": "This is a extension for quickly open file, that's name start with current word.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "icon": "img/quick-open-file.png",
     "bugs": {
         "url": "https://github.com/AlanWalk/quick-open-file/issues"
@@ -39,22 +39,17 @@
                 "quickOpenFile.extensionInclude": {
                     "type": "array",
                     "default": [ "lua", "js" ],
-                    "description": "Set which file extension you want to include, * is any extension."
+                    "description": "Set which file extension you want to include, ** is any extension."
                 },
                 "quickOpenFile.folderExclude": {
                     "type": "array",
                     "default": [ "node_modules", ".vscode" ],
                     "description": "Set which folder you want to exclude."
                 },
-                "quickOpenFile.autoCompleteSuffix": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Whether auto add suffix to word."
-                },
                 "quickOpenFile.suffixList": {
                     "type": "array",
-                    "default": [ "*" ],
-                    "description": "If autoCompleteSuffix is true, will auto add suffix, * is any suffix."
+                    "default": [ "" ],
+                    "description": "If autoCompleteSuffix is true, will auto add suffix, ** is any suffix."
                 }
             }
         }
