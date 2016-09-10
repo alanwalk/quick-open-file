@@ -2,9 +2,6 @@
 
 import * as vscode from 'vscode';
 
-/**
- * 打开文件
- */
 export function openFile(path : string) {
     if (path == vscode.window.activeTextEditor.document.fileName) {
         vscode.window.showInformationMessage("Target is current file.");
@@ -14,9 +11,6 @@ export function openFile(path : string) {
     .then(txtDocument=>vscode.window.showTextDocument(txtDocument));
 }
 
-/**
- * 获取当前光标位置单词
- */
 export function getCurrentWord() : string {
     let window = vscode.window;
     let editor = window.activeTextEditor;
@@ -26,28 +20,29 @@ export function getCurrentWord() : string {
     return document.getText(wordRange);
 }
 
-/**
- * 获取文件名
- */
-export function getFileName(path : string) {
+export function getFileName(path : string) : string {
     return path.substring(path.lastIndexOf('/') + 1);
 }
 
-/**
- * 获取文件列表QuickPick的Item
- */
+export function getFileExtension(path : string) : string {
+    return path.substring(path.lastIndexOf('.') + 1);
+}
+
+export function getFileNameNoExtension(path : string) : string {
+    let lastSplitIndex = path.lastIndexOf('/');
+    let lastDotIndex = path.lastIndexOf('.');
+    return path.substring(lastSplitIndex + 1, lastDotIndex);
+}
+
 export function getFileQuickPickItem(uri : vscode.Uri) {
-    let fsPath = uri.fsPath
+    let path = uri.path
     return {
-        detail: vscode.workspace.asRelativePath(fsPath),
-        label : getFileName(fsPath),
-        path  :fsPath
+        detail: vscode.workspace.asRelativePath(path),
+        label : getFileName(path),
+        path  :path
     };
 }
 
-/**
- * 获取文件列表QuickPick的List
- */
 export function getFileQuickPickList(uries : vscode.Uri[]) {
     let quickPickList = []
     uries.forEach(uri => {
@@ -56,9 +51,6 @@ export function getFileQuickPickList(uries : vscode.Uri[]) {
     return quickPickList;
 }
 
-/**
- * 显示文件列表QuickPick
- */
 export function showFileQuickPick(uries : vscode.Uri[]) {
     vscode.window.showQuickPick(getFileQuickPickList(uries),{ matchOnDetail:true })
     .then(file => {

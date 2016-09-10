@@ -8,7 +8,6 @@ export default class QuickOpenFileTools {
     private extensionInclude    = [];
     private folderExclude       = [];
     private suffixList          = [];
-    private autoCompleteSuffix  = true;
 
     public findFiles() {
         this.updateOption();
@@ -16,8 +15,6 @@ export default class QuickOpenFileTools {
         let word = utils.getCurrentWord();
         let include = '**/' + word + '{' + this.suffixList.join(',') + '}.{' + this.extensionInclude.join(',') + '}';
         let exclude = '{' + this.folderExclude.join(',') + '}'
-
-        console.log(include, '\n', exclude);
 
         vscode.workspace.findFiles(include, exclude, 100)
             .then(uries=>{
@@ -34,10 +31,10 @@ export default class QuickOpenFileTools {
         // default suffix '' must index = 0
         for (var index = 0; index < this.suffixList.length; index++) {
             if (this.suffixList[index] == '') {
-                this.suffixList.splice(index, 1)
+                this.suffixList.splice(index, 1);
             }
         }
-        this.suffixList.splice(0, 0, '')
+        this.suffixList.splice(0, 0, '');
     }
 
     private showResult(uries : vscode.Uri[]) {

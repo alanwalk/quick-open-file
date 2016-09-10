@@ -19,7 +19,7 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.quickOpenFile"
+        "*"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -36,6 +36,11 @@
             "type": "object",
             "title": "Quick Open File Configuration",
             "properties": {
+                "quickOpenFile.peekLanguages": {
+                    "type": "array",
+                    "default": [ "lua", "javascript" ],
+                    "description": "Set which type you want to use peek. it's language id, not extension. "
+                },
                 "quickOpenFile.extensionInclude": {
                     "type": "array",
                     "default": [ "lua", "js" ],
