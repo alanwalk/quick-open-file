@@ -4,14 +4,14 @@ This is a extension for quickly open file, that's name start with current word.
 
 <!-- TOC -->
 
-- [Quick Open File](#quick-open-file)
-    - [Features](#features)
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Keyboard Shortcuts](#keyboard-shortcuts)
-    - [Default Settings](#default-settings)
-    - [License](#license)
-    - [Links](#links)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Keyboard Shortcuts](#keyboard-shortcuts)
+- [Default Settings](#default-settings)
+- [ChangeLog](#changelog)
+- [License](#license)
+- [Links](#links)
 
 <!-- /TOC -->
 
@@ -37,9 +37,20 @@ This is default setting, you can override in your keyboard shortcuts.
 ## Default Settings
 |attributes|values|defaults|description|
 |---|---|---|---|
+|quickOpenFile.peekLanguages|string[]|[ "lua", "javascript" ]|Set which type you want to use peek. it's language id, not extension. |
 |quickOpenFile.extensionInclude|string[]|[ "lua", "js" ]|Set which file extension you want to include, ** is any extension.|
 |quickOpenFile.folderExclude|string[]|[ "node_modules", ".vscode" ]|Set which folder you want to exclude, '' is include any folder.|
-|quickOpenFile.suffixList|bool|[]|If autoCompleteSuffix is true, will auto add suffix, ** is any suffix.|
+|quickOpenFile.suffixList|string[]|[]|Auto add suffix when search file(not allow peek), ** is match any suffix.|
+
+## ChangeLog
+- 0.1.0
+    - Allow peek use mouse
+
+- 0.0.2
+    - Revise Default Settings
+
+- 0.0.1
+    - First Version
 
 ## License
 The package is Open Source Software released under the [License](Liscense). It's developed by AlanWalk.

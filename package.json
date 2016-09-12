@@ -2,7 +2,7 @@
     "name": "quick-open-file",
     "displayName": "Quick Open File",
     "description": "This is a extension for quickly open file, that's name start with current word.",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "icon": "img/quick-open-file.png",
     "bugs": {
         "url": "https://github.com/AlanWalk/quick-open-file/issues"
@@ -54,7 +54,7 @@
                 "quickOpenFile.suffixList": {
                     "type": "array",
                     "default": [ "" ],
-                    "description": "If autoCompleteSuffix is true, will auto add suffix, ** is any suffix."
+                    "description": "Auto add suffix when search file(not allow peek), ** is match any suffix."
                 }
             }
         }
