@@ -3,56 +3,62 @@
 import * as vscode from 'vscode';
 import * as utils from './utils';
 
-let MAX_CACHE_COUNT : number = 5120;
+let MAX_CACHE_COUNT: number = 5120;
 
 export default class FilesCache {
 
-    private fileSystemWatcher   = null;
-    private configChangeWatcher = null;
-    private filesCache          = [];
-    private extensionInclude    = [];
-    private folderExclude       = [];
-    private suffixList          = [];
+    /**
+      * Instance
+      */
+    private static _instance = null;
+    
+    public static GetInstance(): FilesCache {
+        if (FilesCache._instance == null) {
+            FilesCache._instance = new FilesCache();
+        }
+        return FilesCache._instance;
+    }
 
-    constructor()
-    {
+    /**
+     * Core
+     */
+    private fileSystemWatcher = null;
+    private configChangeWatcher = null;
+    private cache = [];
+    private extensionInclude = [];
+    private folderExclude = [];
+    private suffixList = [];
+
+    constructor() {
         this.updateOption();
         this.initWatcher();
         this.refreshFilesCache();
     }
 
-    public searchFile(targetFilename : string) : vscode.Uri {
-        let result = null;
-        let filenameWithSuffix = [];
-        
-        this.filesCache.forEach(uri => {
+    public searchFile(targetFilename: string): vscode.Uri[] {
+        let result = [];
+        this.cache.forEach(uri => {
             let filenameNoExtension = utils.getFileNameNoExtension(uri.path);
-            if (filenameNoExtension == targetFilename) {                
-                result = uri;
-            }
             if (this.isValidFilenameWithSuffix(targetFilename, filenameNoExtension)) {
-                filenameWithSuffix.push(uri);
+                result.push(uri);
             }
         });
-        if (result == null && filenameWithSuffix.length > 0) {
-            result = filenameWithSuffix[0];
-        }
         return result;
     }
 
-    private isValidFilenameWithSuffix(targetFilename : string, filename : string) : boolean{
+    private isValidFilenameWithSuffix(targetFilename: string, filename: string): boolean {
         if (!filename.startsWith(targetFilename)) {
             return false;
         }
-        let suffix = filename.substring(targetFilename.length + 1, filename.length)
+        let suffix = filename.substring(targetFilename.length, filename.length)
         return this.suffixList.indexOf(suffix) != -1;
     }
 
     private updateOption() {
-        let configuration       = vscode.workspace.getConfiguration('quickOpenFile');
-        this.extensionInclude   = <string[]>configuration.get('extensionInclude');
-        this.folderExclude      = <string[]>configuration.get('folderExclude');
-        this.suffixList         = <string[]>configuration.get('suffixList');
+        let configuration = vscode.workspace.getConfiguration('quickOpenFile');
+        this.extensionInclude = <string[]>configuration.get('extensionInclude');
+        this.folderExclude = <string[]>configuration.get('folderExclude');
+        this.suffixList = <string[]>configuration.get('suffixList');
 
         // default suffix '' must index = 0
         for (var index = 0; index < this.suffixList.length; index++) {
@@ -63,43 +69,37 @@ export default class FilesCache {
         this.suffixList.splice(0, 0, '');
     }
 
+    private initWatcher() {
+        this.configChangeWatcher = vscode.workspace.onDidChangeConfiguration(() => {
+            this.updateOption();
+            this.refreshFilesCache();
+        });
+        this.fileSystemWatcher = vscode.workspace.createFileSystemWatcher('**/*');
+        this.fileSystemWatcher.onDidCreate(uri => {
+            if (this.cache.length > MAX_CACHE_COUNT)
+                return;
+            let extension = utils.getFileExtension(uri.fsPath)
+            if (this.extensionInclude.indexOf(extension) != -1) {
+                this.cache.push(uri);
+            }
+        });
+        this.fileSystemWatcher.onDidDelete(uri => {
+            for (let index = 0; index < this.cache.length; index++) {
+                if (this.cache[index].path == uri.path) {
+                    this.cache.splice(index, 1);
+                    break;
+                }
+            }
+        });
+    }
+    
     private refreshFilesCache() {
-        let include = '**/**{' + this.suffixList.join(',') + '}.{' + this.extensionInclude.join(',') + '}';
+        let include = '**/*.{' + this.extensionInclude.join(',') + '}';
         let exclude = '{' + this.folderExclude.join(',') + '}'
         vscode.workspace.findFiles(include, exclude, MAX_CACHE_COUNT)
-            .then(uries=>{
-                this.filesCache = uries;                
+            .then(uries => {
+                this.cache = uries;
             });
-    }
-
-    private initWatcher() {
-        this.configChangeWatcher = vscode.workspace.onDidChangeConfiguration(this.onConfigurationChangeEvent);
-        this.fileSystemWatcher = vscode.workspace.createFileSystemWatcher('**/**');
-        this.fileSystemWatcher.onDidCreate(this.onFileSystemCreateEvent);
-        this.fileSystemWatcher.onDidDelete(this.onFileSystemDeleteEvent);
-   }
-
-    public onFileSystemCreateEvent(uri : vscode.Uri) {
-        if (this.filesCache.length > MAX_CACHE_COUNT)
-            return;
-        let extension = utils.getFileExtension(uri.fsPath)
-        if (this.extensionInclude.indexOf(extension) != -1) {
-            this.filesCache.push(uri);
-        }
-    }
-
-    public onFileSystemDeleteEvent(uri : vscode.Uri) {
-        for(let index = 0; index < this.filesCache.length; index++) {
-            if (this.filesCache[index].path == uri.path) {
-                this.filesCache.splice(index, 1);
-                break;
-            }
-        }
-    }
-
-    public onConfigurationChangeEvent() {
-        this.updateOption();
-        this.refreshFilesCache();
     }
 
     deactivate() {

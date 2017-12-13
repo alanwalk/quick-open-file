@@ -2,7 +2,7 @@
     "name": "quick-open-file",
     "displayName": "Quick Open File",
     "description": "This is a extension for quickly open file, that's name start with current word.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "icon": "img/quick-open-file.png",
     "bugs": {
         "url": "https://github.com/AlanWalk/quick-open-file/issues"

@@ -1,13 +1,22 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import QuickOpenFileTools from './quickOpenFileTools';
+import * as utils from './utils';
+import FilesCache from './filesCache';
 import PeekFileDefinitionProvider from './peekFileDefinitionProvider';
 
 export function activate(context: vscode.ExtensionContext) {
-    let tools = new QuickOpenFileTools();
     let quickOpenFile = vscode.commands.registerCommand('extension.quickOpenFile', () => {
-        tools.findFiles();
+        let word = utils.getCurrentWord();
+        let uries = FilesCache.GetInstance().searchFile(word);
+        let length = uries.length;
+        if (length <= 0) {
+            vscode.window.showWarningMessage("Target file is not found, please ensure extension settings is correct.");
+        } else if (length == 1) {
+            utils.openFile(uries[0].fsPath);
+        } else {
+            utils.showFileQuickPick(uries);
+        }
     });
 
     let peekLanguages = <string[]>vscode.workspace.getConfiguration('quickOpenFile').get('peekLanguages');
