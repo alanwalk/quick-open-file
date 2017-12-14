@@ -29,7 +29,7 @@ export default class FilesCache {
     private folderExclude = [];
     private suffixList = [];
 
-    constructor() {
+    public init() {
         this.updateOption();
         this.initWatcher();
         this.refreshFilesCache();

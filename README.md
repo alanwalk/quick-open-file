@@ -43,8 +43,11 @@ This is default setting, you can override in your keyboard shortcuts.
 |quickOpenFile.suffixList|string[]|[]|Auto add suffix when search file(not allow peek), ** is match any suffix.|
 
 ## ChangeLog
+- 0.1.2
+    - Init file caches when active
+
 - 0.1.1
-    - Fixed bug
+    - Fix bug
 
 - 0.1.0
     - Allow peek use mouse

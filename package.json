@@ -2,7 +2,7 @@
     "name": "quick-open-file",
     "displayName": "Quick Open File",
     "description": "This is a extension for quickly open file, that's name start with current word.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "icon": "img/quick-open-file.png",
     "bugs": {
         "url": "https://github.com/AlanWalk/quick-open-file/issues"
@@ -23,13 +23,16 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
-            "command": "extension.quickOpenFile",
-            "title": "Quick Open File"
-        }],
-        "keybindings":[{
-                "command":"extension.quickOpenFile",
-                "key":"alt+g"
+        "commands": [
+            {
+                "command": "extension.quickOpenFile",
+                "title": "Quick Open File"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.quickOpenFile",
+                "key": "alt+g"
             }
         ],
         "configuration": {
@@ -38,22 +41,33 @@
             "properties": {
                 "quickOpenFile.peekLanguages": {
                     "type": "array",
-                    "default": [ "lua", "javascript" ],
+                    "default": [
+                        "lua",
+                        "javascript"
+                    ],
                     "description": "Set which type you want to use peek. it's language id, not extension. "
                 },
                 "quickOpenFile.extensionInclude": {
                     "type": "array",
-                    "default": [ "lua", "js" ],
+                    "default": [
+                        "lua",
+                        "js"
+                    ],
                     "description": "Set which file extension you want to include, ** is any extension."
                 },
                 "quickOpenFile.folderExclude": {
                     "type": "array",
-                    "default": [ "node_modules", ".vscode" ],
+                    "default": [
+                        "node_modules",
+                        ".vscode"
+                    ],
                     "description": "Set which folder you want to exclude."
                 },
                 "quickOpenFile.suffixList": {
                     "type": "array",
-                    "default": [ "" ],
+                    "default": [
+                        ""
+                    ],
                     "description": "Auto add suffix when search file(not allow peek), ** is match any suffix."
                 }
             }

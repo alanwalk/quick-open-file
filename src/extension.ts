@@ -6,6 +6,10 @@ import FilesCache from './filesCache';
 import PeekFileDefinitionProvider from './peekFileDefinitionProvider';
 
 export function activate(context: vscode.ExtensionContext) {
+    // Init FilesCache
+    FilesCache.GetInstance().init();
+
+    // Register Command "quickOpenFile"
     let quickOpenFile = vscode.commands.registerCommand('extension.quickOpenFile', () => {
         let word = utils.getCurrentWord();
         let uries = FilesCache.GetInstance().searchFile(word);
@@ -18,7 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
             utils.showFileQuickPick(uries);
         }
     });
+    context.subscriptions.push(quickOpenFile);
 
+    // Register Language Peek
     let peekLanguages = <string[]>vscode.workspace.getConfiguration('quickOpenFile').get('peekLanguages');
     const peek_filter: vscode.DocumentFilter[] = peekLanguages.map((language) => {
         return {
@@ -27,7 +33,6 @@ export function activate(context: vscode.ExtensionContext) {
         };
     });
     let definitionProvider = vscode.languages.registerDefinitionProvider(peek_filter, new PeekFileDefinitionProvider());
-    context.subscriptions.push(quickOpenFile);
     context.subscriptions.push(definitionProvider);
 }
 
