@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Register Command "quickOpenFile"
     let quickOpenFile = vscode.commands.registerCommand('extension.quickOpenFile', () => {
         let word = utils.getCurrentWord();
-        let uries = FilesCache.GetInstance().searchFile(word);
+        let uries = FilesCache.GetInstance().searchFile(word, true);
         let length = uries.length;
         if (length <= 0) {
             vscode.window.showWarningMessage("Target file is not found, please ensure extension settings is correct.");

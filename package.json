@@ -2,8 +2,8 @@
     "name": "quick-open-file",
     "displayName": "Quick Open File",
     "description": "This is a extension for quickly open file, that's name start with current word.",
-    "version": "0.1.2",
-    "icon": "img/quick-open-file.png",
+    "version": "0.1.3",
+    "icon": "resources/quick-open-file.png",
     "bugs": {
         "url": "https://github.com/AlanWalk/quick-open-file/issues"
     },
@@ -13,7 +13,7 @@
     },
     "publisher": "AlanWalk",
     "engines": {
-        "vscode": "^1.0.0"
+        "vscode": "^1.22.0"
     },
     "categories": [
         "Other"
@@ -21,7 +21,7 @@
     "activationEvents": [
         "*"
     ],
-    "main": "./out/src/extension",
+    "main": "./out/extension",
     "contributes": {
         "commands": [
             {
@@ -74,12 +74,14 @@
         }
     },
     "scripts": {
-        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install"
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^1.8.5",
-        "vscode": "^0.11.0"
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6"
     }
 }

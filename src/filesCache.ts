@@ -35,13 +35,20 @@ export default class FilesCache {
         this.refreshFilesCache();
     }
 
-    public searchFile(targetFilename: string): vscode.Uri[] {
+    public searchFile(targetFilename: string, withSuffix : boolean): vscode.Uri[] {
         let result = [];
         this.cache.forEach(uri => {
             let filenameNoExtension = utils.getFileNameNoExtension(uri.path);
-            if (this.isValidFilenameWithSuffix(targetFilename, filenameNoExtension)) {
-                result.push(uri);
+            if (withSuffix) {
+                if (this.isValidFilenameWithSuffix(targetFilename, filenameNoExtension)) {
+                    result.push(uri);
+                }
+            } else {
+                if (targetFilename == filenameNoExtension) {
+                    result.push(uri);
+                }
             }
+
         });
         return result;
     }

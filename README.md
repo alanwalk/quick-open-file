@@ -4,14 +4,15 @@ This is a extension for quickly open file, that's name start with current word.
 
 <!-- TOC -->
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Keyboard Shortcuts](#keyboard-shortcuts)
-- [Default Settings](#default-settings)
-- [ChangeLog](#changelog)
-- [License](#license)
-- [Links](#links)
+- [Quick Open File](#quick-open-file)
+    - [Features](#features)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Keyboard Shortcuts](#keyboard-shortcuts)
+    - [Default Settings](#default-settings)
+    - [ChangeLog](#changelog)
+    - [License](#license)
+    - [Links](#links)
 
 <!-- /TOC -->
 
@@ -43,6 +44,9 @@ This is default setting, you can override in your keyboard shortcuts.
 |quickOpenFile.suffixList|string[]|[]|Auto add suffix when search file(not allow peek), ** is match any suffix.|
 
 ## ChangeLog
+- 0.1.3
+    - peek operation don't match suffix
+    
 - 0.1.2
     - Init file caches when active
 
