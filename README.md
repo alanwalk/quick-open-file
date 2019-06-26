@@ -22,7 +22,7 @@ This is a extension for quickly open file, that's name start with current word.
 
 ## Installation
 ```
-ext install quick-open-file
+ext install alanwalk.quick-open-file
 ```
 
 ## Usage
